@@ -1,9 +1,5 @@
 package uwu.femboypeek.itemspegger.formatters;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.attribute.Attribute;
@@ -11,6 +7,11 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class AttributeFormatter {
     private static final MiniMessage mm = MiniMessage.miniMessage();
@@ -32,18 +33,15 @@ public class AttributeFormatter {
     public List<Component> formatAttributes() {
         List<Component> attributesList = new ArrayList<>();
         if (attributes != null) {
-            for (Map.Entry<Attribute, Collection<AttributeModifier>> entry :
-                    attributes.entrySet()) {
+            for (Map.Entry<Attribute, Collection<AttributeModifier>> entry : attributes.entrySet()) {
                 Attribute attribute = entry.getKey();
                 Collection<AttributeModifier> modifiers = entry.getValue();
                 for (AttributeModifier modifier : modifiers) {
                     String attributeName = getAttributeName(attribute);
                     double attributeValue = modifier.getAmount();
                     String operation = getAttributeOperation(modifier);
-                    Component attributeComp =
-                            mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F <#D4D9D8>"
-                                    + attributeName + "<i:false> <gradient:#44F777:#00D6FF>+"
-                                    + attributeValue + operation + "</gradient></i:false>");
+                    Component attributeComp = mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F <#D4D9D8>" + attributeName
+                            + "<i:false> <gradient:#44F777:#00D6FF>+" + attributeValue + operation + "</gradient></i:false>");
                     attributesList.add(attributeComp);
                 }
             }

@@ -1,14 +1,15 @@
 package uwu.femboypeek.itemspegger.formatters;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class EnchantmentFormatter {
     private static final MiniMessage mm = MiniMessage.miniMessage();
@@ -34,10 +35,8 @@ public class EnchantmentFormatter {
                 Enchantment enchantment = entry.getKey();
                 int level = entry.getValue();
                 String enchantName = enchantment.getKey().getKey().replace("_", " ");
-                Component enchantmentComp =
-                        mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F <#D4D9D8>"
-                                + enchantName + "</i:false> <i:false><gradient:#9540FC:#FF00D9>"
-                                + level + "</gradient></i:false>");
+                Component enchantmentComp = mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F <#D4D9D8>" + enchantName
+                        + "</i:false> <i:false><gradient:#9540FC:#FF00D9>" + level + "</gradient></i:false>");
                 enchantmentsList.add(enchantmentComp);
             }
         }

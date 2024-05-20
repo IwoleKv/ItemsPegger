@@ -1,12 +1,13 @@
 package uwu.femboypeek.itemspegger.formatters;
 
-import java.util.ArrayList;
-import java.util.List;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoreFormatter {
     private List<Component> lore;
@@ -50,8 +51,7 @@ public class LoreFormatter {
         return limitedLore;
     }
 
-    public List<Component> formattedLore(List<Component> enchantmentComp,
-                                         List<Component> loreComp, List<Component> attributeComp) {
+    public List<Component> formattedLore(List<Component> enchantmentComp, List<Component> loreComp, List<Component> attributeComp) {
         List<Component> result = new ArrayList<>();
 
         if (!enchantmentComp.isEmpty()) {
@@ -66,8 +66,7 @@ public class LoreFormatter {
             result.add(mm.deserialize(" <#FFFF55><i:false><bold>ᴡɪᴇᴅᴢᴀ</bold>"));
             result.add(mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F"));
             for (Component comp : loreComp) {
-                Component symbol =
-                        mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F<reset> ");
+                Component symbol = mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F<reset> ");
                 result.add(symbol.append(comp));
             }
         }

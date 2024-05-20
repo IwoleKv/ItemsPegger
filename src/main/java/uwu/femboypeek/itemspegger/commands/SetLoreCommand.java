@@ -1,6 +1,5 @@
 package uwu.femboypeek.itemspegger.commands;
 
-import java.util.List;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,10 +12,11 @@ import uwu.femboypeek.itemspegger.formatters.AttributeFormatter;
 import uwu.femboypeek.itemspegger.formatters.EnchantmentFormatter;
 import uwu.femboypeek.itemspegger.formatters.LoreFormatter;
 
+import java.util.List;
+
 public class SetLoreCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command command,
-                             String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("");
             return true;
@@ -42,8 +42,7 @@ public class SetLoreCommand implements CommandExecutor {
         List<Component> loreComp = loreFormatter.getLore();
         List<Component> attributeComp = attributeFormatter.formatAttributes();
 
-        List<Component> finalLore =
-                loreFormatter.formattedLore(enchantmentComp, loreComp, attributeComp);
+        List<Component> finalLore = loreFormatter.formattedLore(enchantmentComp, loreComp, attributeComp);
 
         ItemMeta itemMeta = itemInHand.getItemMeta();
 
