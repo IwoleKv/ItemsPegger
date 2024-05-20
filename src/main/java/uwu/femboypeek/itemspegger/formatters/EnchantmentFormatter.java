@@ -35,7 +35,16 @@ public class EnchantmentFormatter {
                 Enchantment enchantment = entry.getKey();
                 int level = entry.getValue();
                 String enchantName = enchantment.getKey().getKey().replace("_", " ");
-                Component enchantmentComp = mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F <#D4D9D8>" + enchantName
+
+                String[] words = enchantName.split(" ");
+                StringBuilder capitalizedEnchantName = new StringBuilder();
+                for (String word : words) {
+                    capitalizedEnchantName.append(Character.toUpperCase(word.charAt(0)))
+                            .append(word.substring(1).toLowerCase())
+                            .append(" ");
+                }
+
+                Component enchantmentComp = mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F <#D4D9D8>" + capitalizedEnchantName.toString().trim()
                         + "</i:false> <i:false><gradient:#9540FC:#FF00D9>" + level + "</gradient></i:false>");
                 enchantmentsList.add(enchantmentComp);
             }

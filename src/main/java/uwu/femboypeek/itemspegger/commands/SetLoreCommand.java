@@ -48,11 +48,7 @@ public class SetLoreCommand implements CommandExecutor {
 
         boolean hasHidden = itemMeta.hasItemFlag(ItemFlag.HIDE_ENCHANTS);
 
-        if (hasHidden) {
-            finalLore = loreFormatter.strippedFormattedLore(enchantmentComp, loreComp, attributeComp);
-        } else {
-            finalLore = loreFormatter.formattedLore(enchantmentComp, loreComp, attributeComp);
-        }
+        finalLore = loreFormatter.formattedLore(enchantmentComp, loreComp, attributeComp, hasHidden);
 
         itemMeta.lore(finalLore);
         itemInHand.setItemMeta(itemMeta);

@@ -53,7 +53,7 @@ public class LoreFormatter {
         return limitedLore;
     }
 
-    public List<Component> formattedLore(List<Component> enchantmentComp, List<Component> loreComp, List<Component> attributeComp) {
+    public List<Component> formattedLore(List<Component> enchantmentComp, List<Component> loreComp, List<Component> attributeComp, boolean strip) {
         List<Component> result = new ArrayList<>();
 
         if (!enchantmentComp.isEmpty()) {
@@ -66,40 +66,21 @@ public class LoreFormatter {
         if (loreComp != null && !loreComp.isEmpty()) {
             result.add(Component.text(""));
             result.add(mm.deserialize(" <#FFFF55><i:false><bold>ᴡɪᴇᴅᴢᴀ</bold>"));
-            result.add(mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F"));
-            for (Component comp : loreComp) {
-                Component symbol = mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F<reset> ");
-                result.add(symbol.append(comp));
+            if (!strip) {
+                result.add(mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F"));
+                for (Component comp : loreComp) {
+                    Component symbol = mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F<reset> ");
+                    result.add(symbol.append(comp));
+                }
+            } else {
+                result.addAll(loreComp);
             }
         }
 
         if (!attributeComp.isEmpty()) {
-            result.add(Component.text(""));
-            result.add(mm.deserialize(" <#55FF55><i:false><bold>ᴀᴛʀʏʙᴜᴛʏ</bold>"));
-            result.add(mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F"));
-            result.addAll(attributeComp);
-        }
-
-        return result;
-    }
-
-    public List<Component> strippedFormattedLore(List<Component> enchantmentComp, List<Component> loreComp, List<Component> attributeComp) {
-        List<Component> result = new ArrayList<>();
-
-        if (!enchantmentComp.isEmpty()) {
-            result.add(Component.text(""));
-            result.add(mm.deserialize(" <#9540FC><i:false><bold>ᴇɴᴄʜᴀɴᴛʏ</bold>"));
-            result.add(mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F"));
-            result.addAll(enchantmentComp);
-        }
-
-        if (loreComp != null && !loreComp.isEmpty()) {
-            result.add(Component.text(""));
-            result.add(mm.deserialize(" <#FFFF55><i:false><bold>ᴡɪᴇᴅᴢᴀ</bold>"));
-            result.addAll(loreComp);
-        }
-
-        if (!attributeComp.isEmpty()) {
+            if (!strip) {
+                result.add(Component.text(""));
+            }
             result.add(mm.deserialize(" <#55FF55><i:false><bold>ᴀᴛʀʏʙᴜᴛʏ</bold>"));
             result.add(mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F"));
             result.addAll(attributeComp);

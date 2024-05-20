@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,9 +40,10 @@ public class AttributeFormatter {
                 for (AttributeModifier modifier : modifiers) {
                     String attributeName = getAttributeName(attribute);
                     double attributeValue = modifier.getAmount();
+                    String formattedAttributeValue = attributeValue == (int) attributeValue ? String.valueOf((int) attributeValue) : String.valueOf(attributeValue);
                     String operation = getAttributeOperation(modifier);
                     Component attributeComp = mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F <#D4D9D8>" + attributeName
-                            + "<i:false> <gradient:#44F777:#00D6FF>+" + attributeValue + operation + "</gradient></i:false>");
+                            + "<i:false> <gradient:#44F777:#00D6FF>+" + operation + formattedAttributeValue + "</gradient></i:false>");
                     attributesList.add(attributeComp);
                 }
             }
@@ -87,9 +89,9 @@ public class AttributeFormatter {
             case ADD_NUMBER:
                 return "";
             case ADD_SCALAR:
-                return "%";
+                return "x";
             case MULTIPLY_SCALAR_1:
-                return "%";
+                return "x";
             default:
                 return "";
         }
@@ -98,6 +100,7 @@ public class AttributeFormatter {
         ItemMeta meta = item.getItemMeta();
         if (meta != null && meta.hasAttributeModifiers()) {
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             item.setItemMeta(meta);
         }
     }
