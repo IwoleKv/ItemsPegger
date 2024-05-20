@@ -24,7 +24,7 @@ public class LoreFormatter {
                 boolean hasHidden = meta.hasItemFlag(ItemFlag.HIDE_ENCHANTS);
 
                 if (hasHidden) {
-                    this.lore = strippedLore(meta.getLore());
+                    this.lore = strippedLore(meta.lore());
                 } else {
                     this.lore = meta.lore();
                 }
@@ -32,11 +32,13 @@ public class LoreFormatter {
         }
     }
 
-    private List<Component> strippedLore(List<String> originalLore) {
+    private List<Component> strippedLore(List<Component> originalLore) {
         List<Component> limitedLore = new ArrayList<>();
         boolean isWithinSection = false;
 
-        for (String line : originalLore) {
+        for (Component component : originalLore) {
+            String line = mm.serialize(component);
+
             if (line.contains("ᴡɪᴇᴅᴢᴀ")) {
                 isWithinSection = true;
                 continue;
@@ -45,7 +47,7 @@ public class LoreFormatter {
                 break;
             }
             if (isWithinSection) {
-                limitedLore.add(Component.text(line));
+                limitedLore.add(component);
             }
         }
         return limitedLore;
@@ -73,6 +75,31 @@ public class LoreFormatter {
 
         if (!attributeComp.isEmpty()) {
             result.add(Component.text(""));
+            result.add(mm.deserialize(" <#55FF55><i:false><bold>ᴀᴛʀʏʙᴜᴛʏ</bold>"));
+            result.add(mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F"));
+            result.addAll(attributeComp);
+        }
+
+        return result;
+    }
+
+    public List<Component> strippedFormattedLore(List<Component> enchantmentComp, List<Component> loreComp, List<Component> attributeComp) {
+        List<Component> result = new ArrayList<>();
+
+        if (!enchantmentComp.isEmpty()) {
+            result.add(Component.text(""));
+            result.add(mm.deserialize(" <#9540FC><i:false><bold>ᴇɴᴄʜᴀɴᴛʏ</bold>"));
+            result.add(mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F"));
+            result.addAll(enchantmentComp);
+        }
+
+        if (loreComp != null && !loreComp.isEmpty()) {
+            result.add(Component.text(""));
+            result.add(mm.deserialize(" <#FFFF55><i:false><bold>ᴡɪᴇᴅᴢᴀ</bold>"));
+            result.addAll(loreComp);
+        }
+
+        if (!attributeComp.isEmpty()) {
             result.add(mm.deserialize(" <#55FF55><i:false><bold>ᴀᴛʀʏʙᴜᴛʏ</bold>"));
             result.add(mm.deserialize("<i:false><#FFFFFF>\uD873\uDD9F"));
             result.addAll(attributeComp);

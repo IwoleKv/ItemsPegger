@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,7 @@ import uwu.femboypeek.itemspegger.formatters.AttributeFormatter;
 import uwu.femboypeek.itemspegger.formatters.EnchantmentFormatter;
 import uwu.femboypeek.itemspegger.formatters.LoreFormatter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SetLoreCommand implements CommandExecutor {
@@ -41,18 +43,22 @@ public class SetLoreCommand implements CommandExecutor {
         List<Component> enchantmentComp = enchantmentFormatter.formatEnchantments();
         List<Component> loreComp = loreFormatter.getLore();
         List<Component> attributeComp = attributeFormatter.formatAttributes();
-
-        List<Component> finalLore = loreFormatter.formattedLore(enchantmentComp, loreComp, attributeComp);
-
+        List<Component> finalLore = new ArrayList<>();
         ItemMeta itemMeta = itemInHand.getItemMeta();
 
-        if (itemMeta != null) {
-            itemMeta.lore(finalLore);
-            itemInHand.setItemMeta(itemMeta);
+        boolean hasHidden = itemMeta.hasItemFlag(ItemFlag.HIDE_ENCHANTS);
 
-            enchantmentFormatter.hideEnchantments(itemInHand);
-            attributeFormatter.hideAttributes(itemInHand);
+        if (hasHidden) {
+            finalLore = loreFormatter.strippedFormattedLore(enchantmentComp, loreComp, attributeComp);
+        } else {
+            finalLore = loreFormatter.formattedLore(enchantmentComp, loreComp, attributeComp);
         }
+
+        itemMeta.lore(finalLore);
+        itemInHand.setItemMeta(itemMeta);
+
+        enchantmentFormatter.hideEnchantments(itemInHand);
+        attributeFormatter.hideAttributes(itemInHand);
 
         return true;
     }
